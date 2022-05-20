@@ -23,11 +23,11 @@ export default function DataDisplay({ report }) {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {report?.map(({ symbol, long, short }) => (
+                    {report?.map(({ symbol, short, long }) => (
                         <Tr key={symbol}>
                             <Td>{symbol}</Td>
-                            <Td isNumeric>{long}</Td>
                             <Td isNumeric>{short}</Td>
+                            <Td isNumeric>{long}</Td>
                         </Tr>
                     ))}
                 </Tbody>
