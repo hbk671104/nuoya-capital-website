@@ -27,7 +27,7 @@ export default function Home({ reports }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="min-h-screen flex flex-col p-6">
+            <main className="min-h-screen flex flex-col py-6">
                 <Tabs align="center" variant="solid-rounded" defaultIndex={0}>
                     <TabList>
                         <Tab>Nuoya</Tab>
