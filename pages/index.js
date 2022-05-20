@@ -1,5 +1,14 @@
 import Head from 'next/head'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import {
+    Tabs,
+    TabList,
+    TabPanels,
+    Tab,
+    TabPanel,
+    IconButton,
+    useColorMode,
+} from '@chakra-ui/react'
+import { SunIcon, MoonIcon } from '@chakra-ui/icons'
 
 import { generateReport } from '../lib/report'
 import { nuoya, wei } from '../lib/account'
@@ -19,6 +28,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ reports }) {
+    const { colorMode, toggleColorMode } = useColorMode()
     return (
         <>
             <Head>
@@ -41,6 +51,14 @@ export default function Home({ reports }) {
                         ))}
                     </TabPanels>
                 </Tabs>
+                <div className="flex flex-row justify-end px-6">
+                    <IconButton
+                        icon={
+                            colorMode === 'light' ? <MoonIcon /> : <SunIcon />
+                        }
+                        onClick={toggleColorMode}
+                    />
+                </div>
             </main>
         </>
     )
