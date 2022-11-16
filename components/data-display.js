@@ -8,12 +8,13 @@ import {
     Td,
     TableCaption,
     TableContainer,
+    Tag,
 } from '@chakra-ui/react'
 
 export default function DataDisplay({ report }) {
     return (
         <TableContainer>
-            <Table variant="simple">
+            <Table>
                 <TableCaption>How many longs and shorts?</TableCaption>
                 <Thead>
                     <Tr>
@@ -25,7 +26,9 @@ export default function DataDisplay({ report }) {
                 <Tbody>
                     {report?.map(({ symbol, short, long }) => (
                         <Tr key={symbol}>
-                            <Td>{symbol}</Td>
+                            <Td>
+                                <Tag size="lg">{symbol}</Tag>
+                            </Td>
                             <Td isNumeric>{short}</Td>
                             <Td isNumeric>{long}</Td>
                         </Tr>
