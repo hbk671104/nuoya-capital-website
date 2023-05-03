@@ -1,31 +1,32 @@
 {
-    "name": "nuoya-capital-website",
-    "description": "nuoya.capital",
-    "version": "1.0.0",
-    "author": "Bokang Huang <hbk671104@gmail.com>",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "@chakra-ui/icons": "^2.0.17",
-        "@chakra-ui/react": "^2.4.9",
-        "@emotion/react": "^11.10.5",
-        "@emotion/styled": "^11.10.5",
-        "framer-motion": "^6.5.1",
-        "got": "^12.5.3",
-        "next": "12.1.6",
-        "react": "18.1.0",
-        "react-dom": "18.1.0"
-    },
-    "devDependencies": {
-        "autoprefixer": "^10.4.13",
-        "eslint": "7.32.0",
-        "eslint-config-next": "12.1.6",
-        "postcss": "^8.4.21",
-        "tailwindcss": "^3.2.4"
-    }
+  "name": "nuoya-capital-website",
+  "description": "nuoya.capital",
+  "version": "1.0.0",
+  "author": "Bokang Huang <hbk671104@gmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prettify": "npx prettier --single-quote --no-semi --write ./components ./lib ./pages ./styles"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.19",
+    "@chakra-ui/react": "^2.6.0",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "framer-motion": "^6.5.1",
+    "got": "^12.6.0",
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "eslint": "7.32.0",
+    "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
+  }
 }
