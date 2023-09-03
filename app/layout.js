@@ -1,12 +1,4 @@
-// import { extendTheme } from '@chakra-ui/react'
-// import { ColorModeScript } from '@chakra-ui/react'
-// const config = {
-//   initialColorMode: 'system',
-//   useSystemColorMode: false,
-// }
-// const theme = extendTheme({ config })
-
-import '../styles/globals.css'
+import './styles/globals.css'
 import { Providers } from './providers'
 
 export const metadata = {
@@ -23,11 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          {/* 👇 Here's the script */}
-          {/* <ColorModeScript initialColorMode={theme.config?.initialColorMode} /> */}
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
