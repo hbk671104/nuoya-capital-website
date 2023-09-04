@@ -24,7 +24,7 @@ export default function Home({ users }) {
           ))}
         </TabList>
         <TabPanels className="max-w-lg">
-          {users.map((u, index) => (
+          {users.map((u) => (
             <TabPanel key={u.name}>
               <DataDisplay report={u?.report} />
             </TabPanel>
