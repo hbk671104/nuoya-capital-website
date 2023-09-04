@@ -17,20 +17,18 @@ export const getBearerToken = async (refresh_token) => {
   }
 }
 
-export const getPositions = async ({ id, refresh_token }) => {
+export const getAccount = async ({ id, refresh_token }) => {
   try {
     const accessToken = await getBearerToken(refresh_token)
-    const {
-      securitiesAccount: { positions },
-    } = await got(
-      `https://api.tdameritrade.com/v1/accounts/${id}?fields=positions`,
+    const account = await got(
+      `https://api.tdameritrade.com/v1/accounts/${id}?fields=positions,orders`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       }
     ).json()
-    return Promise.resolve(positions)
+    return Promise.resolve(account)
   } catch (error) {
     return Promise.reject(error)
   }
@@ -38,32 +36,40 @@ export const getPositions = async ({ id, refresh_token }) => {
 
 export const generateReport = async (account) => {
   try {
-    const positions = await getPositions(account)
-    const raw = positions.reduce((acc, position) => {
+    const { securitiesAccount } = await getAccount(account)
+    const raw = securitiesAccount?.positions.reduce((acc, position) => {
       const { instrument, shortQuantity, longQuantity } = position
-      let short, long, sym
       switch (instrument.assetType) {
-        case 'EQUITY':
+        case 'EQUITY': {
           const { symbol } = instrument
-          short = shortQuantity / 100
-          long = longQuantity / 100
-          sym = symbol
-          break
-        case 'OPTION':
+          const short = shortQuantity / 100
+          const long = longQuantity / 100
+          return {
+            ...acc,
+            [symbol]: {
+              long: acc[symbol] ? acc[symbol].long + long : long,
+              short: acc[symbol] ? acc[symbol].short + short : short,
+            },
+          }
+        }
+        case 'OPTION': {
           const { underlyingSymbol, putCall } = instrument
-          short = putCall === 'CALL' ? shortQuantity : longQuantity
-          long = putCall === 'CALL' ? longQuantity : shortQuantity
-          sym = underlyingSymbol
-          break
+          const short = putCall === 'CALL' ? shortQuantity : longQuantity
+          const long = putCall === 'CALL' ? longQuantity : shortQuantity
+          return {
+            ...acc,
+            [underlyingSymbol]: {
+              long: acc[underlyingSymbol]
+                ? acc[underlyingSymbol].long + long
+                : long,
+              short: acc[underlyingSymbol]
+                ? acc[underlyingSymbol].short + short
+                : short,
+            },
+          }
+        }
         default:
           return acc
-      }
-      return {
-        ...acc,
-        [sym]: {
-          long: acc[sym] ? acc[sym].long + long : long,
-          short: acc[sym] ? acc[sym].short + short : short,
-        },
       }
     }, {})
     const report = Object.keys(raw)
