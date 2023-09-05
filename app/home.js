@@ -16,14 +16,14 @@ import DataDisplay from './components/data-display'
 export default function Home({ users }) {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <main className="px-12 py-8">
+    <main className="py-4">
       <Tabs align="center" variant="soft-rounded">
         <TabList>
           {users.map((u) => (
             <Tab key={u.name}>{u?.name}</Tab>
           ))}
         </TabList>
-        <TabPanels className="max-w-lg">
+        <TabPanels className="sm:max-w-lg">
           {users.map((u) => (
             <TabPanel key={u.name}>
               <DataDisplay report={u?.report} />
@@ -31,7 +31,7 @@ export default function Home({ users }) {
           ))}
         </TabPanels>
       </Tabs>
-      <div className="fixed bottom-6 right-9">
+      <div className="fixed bottom-4 right-4">
         <IconButton
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
