@@ -1,7 +1,7 @@
 {
   "name": "nuoya-capital-website",
   "description": "nuoya.capital",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Bokang Huang <hbk671104@gmail.com>",
   "private": true,
   "scripts": {
@@ -12,8 +12,8 @@
     "prettify": "npx prettier --single-quote --no-semi --write ./components ./lib ./pages ./styles"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.1.0",
-    "@chakra-ui/react": "^2.8.0",
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "framer-motion": "^6.5.1",
@@ -23,10 +23,10 @@
     "react-dom": "18.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.16",
     "eslint": "7.32.0",
     "eslint-config-next": "12.1.6",
-    "postcss": "^8.4.27",
-    "tailwindcss": "^3.3.3"
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
   }
 }

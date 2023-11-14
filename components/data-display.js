@@ -12,35 +12,41 @@ import {
 } from '@chakra-ui/react'
 
 export default function DataDisplay({ report }) {
+  const columns = (
+    <Tr>
+      <Th>Symbol</Th>
+      <Th isNumeric>Short(s)</Th>
+      <Th isNumeric>Long(s)</Th>
+      <Th isNumeric>Delta</Th>
+      <Th isNumeric>Gamma</Th>
+      <Th isNumeric>Last Price</Th>
+    </Tr>
+  )
+
   return (
     <TableContainer>
-      <Table>
-        <TableCaption>How many longs and shorts?</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>Symbol</Th>
-            <Th isNumeric>Short(s)</Th>
-            <Th isNumeric>Long(s)</Th>
-          </Tr>
-        </Thead>
+      <Table size="sm">
+        {/* <TableCaption>How many longs and shorts?</TableCaption> */}
+        <Thead>{columns}</Thead>
         <Tbody>
-          {report?.map(({ symbol, short, long }) => (
+          {report?.map(({ symbol, short, long, delta, gamma, lastPrice }) => (
             <Tr key={symbol}>
               <Td>
-                <Tag size="lg">{symbol}</Tag>
+                <Tag>{symbol}</Tag>
               </Td>
-              <Td isNumeric>{short}</Td>
-              <Td isNumeric>{long}</Td>
+              <Td isNumeric className="text-red-500">
+                {short}
+              </Td>
+              <Td isNumeric className="text-emerald-500">
+                {long}
+              </Td>
+              <Td isNumeric>{delta}</Td>
+              <Td isNumeric>{gamma}</Td>
+              <Td isNumeric>{lastPrice}</Td>
             </Tr>
           ))}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>Symbol</Th>
-            <Th isNumeric>Short(s)</Th>
-            <Th isNumeric>Long(s)</Th>
-          </Tr>
-        </Tfoot>
+        <Tfoot>{columns}</Tfoot>
       </Table>
     </TableContainer>
   )
