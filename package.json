@@ -1,7 +1,7 @@
 {
   "name": "nuoya-capital-website",
   "description": "nuoya.capital",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Bokang Huang <hbk671104@gmail.com>",
   "private": true,
   "scripts": {
@@ -18,9 +18,10 @@
     "@emotion/styled": "^11.11.0",
     "framer-motion": "^6.5.1",
     "got": "^12.6.1",
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "million": "^2.6.4",
+    "next": "^12.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
