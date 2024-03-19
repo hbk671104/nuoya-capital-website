@@ -53,19 +53,19 @@ const getBearerToken = async (user) => {
     await updateRefreshToken(user.id, { refreshToken: data?.refresh_token, refreshTokenExpiresAt: dayjs().add(data?.refresh_token_expires_in, 's').toDate() })
     const updatedUser = await updateAccessToken(user.id, { accessToken: data?.access_token, accessTokenExpiresAt: dayjs().add(data?.expires_in, 's').toDate() })
 
-    return updatedUser?.accessToken
+    return updatedUser.accessToken
   }
 
   expiresAt = dayjs(user.accessTokenExpiresAt)
 
-  // if access token is expired within five minutes, request a new one
-  if (expiresAt.isBefore(dayjs().add(5, 'm'))) {
+  // if access token doesn't exist or if access token is expired within five minutes, request a new one
+  if (!user.accessToken || expiresAt.isBefore(dayjs().add(5, 'm'))) {
     const data = await getTokenInfo(user.refreshToken)
 
     // update access token only
     const updatedUser = await updateAccessToken(user.id, { accessToken: data?.access_token, accessTokenExpiresAt: dayjs().add(data?.expires_in, 's').toDate() })
 
-    return updatedUser?.accessToken
+    return updatedUser.accessToken
   }
 
   // access token is valid
@@ -76,7 +76,7 @@ export const getReports = async () => {
   const users = await getUsers()
   const reports = await Promise.all(users.map(async (user) => {
     const accessToken = await getBearerToken(user)
-    const { netLiquidation, positions } = await getPositions({ id: user?.id, accessToken })
+    const { netLiquidation, positions } = await getPositions({ id: user.id, accessToken })
 
     // get the raw data first
     const raw = positions.reduce((acc, position) => {
