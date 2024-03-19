@@ -1,4 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
+const dayjs = require('dayjs')
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -7,14 +9,16 @@ async function main() {
       data: {
         id: Number(process.env.ACCOUNT_ID_NUOYA),
         name: 'Nuoya',
-        refreshToken: process.env.REFRESH_TOKEN_NUOYA
+        refreshToken: process.env.REFRESH_TOKEN_NUOYA,
+        refreshTokenExpiresAt: dayjs().add(1, 'M').toDate()
       }
     }),
     prisma.user.create({
       data: {
         id: Number(process.env.ACCOUNT_ID_WEI),
         name: 'Wei',
-        refreshToken: process.env.REFRESH_TOKEN_WEI
+        refreshToken: process.env.REFRESH_TOKEN_WEI,
+        refreshTokenExpiresAt: dayjs().add(1, 'M').toDate()
       }
     })])
 }
