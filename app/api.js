@@ -116,7 +116,7 @@ export const getReports = async () => {
     const report = Object.keys(raw)
       .sort((a, b) => a.localeCompare(b))
       .map((key) => {
-        const { lastPrice } = quotes[key]
+        const { lastPrice, netPercentChangeInDouble } = quotes[key]
         const delta = netLiquidation / 6.0 / lastPrice
         const gamma = delta / (lastPrice * 0.05)
 
@@ -125,6 +125,7 @@ export const getReports = async () => {
           short: raw[key].short,
           long: raw[key].long,
           lastPrice,
+          netPercentChangeInDouble,
           delta: delta.toFixed(2),
           gamma: gamma.toFixed(2),
         }
