@@ -39,6 +39,7 @@ const getQuotes = async ({ symbol }) => {
     `${ENDPOINT}/marketdata/quotes?apikey=${API_KEY}&symbol=${symbol}`,
   ).json()
 
+  console.log(res)
   return res
 }
 
@@ -116,7 +117,7 @@ export const getReports = async () => {
     const report = Object.keys(raw)
       .sort((a, b) => a.localeCompare(b))
       .map((key) => {
-        const { lastPrice, netPercentChangeInDouble } = quotes[key]
+        const { lastPrice, netPercentChangeInDouble, netChange } = quotes[key]
         const delta = netLiquidation / 6.0 / lastPrice
         const gamma = delta / (lastPrice * 0.05)
 
@@ -126,6 +127,7 @@ export const getReports = async () => {
           long: raw[key].long,
           lastPrice,
           netPercentChangeInDouble,
+          netChange,
           delta: delta.toFixed(2),
           gamma: gamma.toFixed(2),
         }

@@ -85,16 +85,30 @@ export default async function Home() {
 													}
 												}
 
+												const getColor = (percentage) => {
+													if (percentage > 0) {
+														return "emerald"
+													}
+
+													if (percentage === 0) {
+														return "orange"
+													}
+
+													if (percentage < 0) {
+														return "red"
+													}
+												}
+
 												return (
 													<TableRow key={row?.symbol}>
 														<TableCell>
 															<Badge>{row?.symbol}</Badge>
 														</TableCell>
-														<TableCell className="text-right">
-															<Badge color="red">{row?.short}</Badge>
+														<TableCell className="text-right text-red-500">
+															{row?.short}
 														</TableCell>
-														<TableCell className="text-right">
-															<Badge color="emerald">{row?.long}</Badge>
+														<TableCell className="text-right text-emerald-500">
+															{row?.long}
 														</TableCell>
 														<TableCell className="text-right">
 															{row?.delta}
@@ -107,12 +121,17 @@ export default async function Home() {
 																deltaType={getDeltaType(
 																	row?.netPercentChangeInDouble,
 																)}
+																tooltip={row?.netChange}
 															>
 																{row?.netPercentChangeInDouble.toFixed(2)}
 															</BadgeDelta>
 														</TableCell>
 														<TableCell className="text-right">
-															{row?.lastPrice}
+															<Badge
+																color={getColor(row?.netPercentChangeInDouble)}
+															>
+																{row?.lastPrice}
+															</Badge>
 														</TableCell>
 													</TableRow>
 												)
