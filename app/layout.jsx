@@ -1,3 +1,4 @@
+import { ThemeProvider } from "next-themes"
 import { Inter } from "next/font/google"
 import "./globals.css"
 
@@ -10,8 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en" className="antialiased bg-slate-50 dark:bg-slate-950">
-			<body className={inter.className}>{children}</body>
+		<html suppressHydrationWarning lang="en" className="antialiased">
+			<body className={inter.className}>
+				<ThemeProvider attribute="class">{children}</ThemeProvider>
+			</body>
 		</html>
 	)
 }

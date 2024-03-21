@@ -16,7 +16,8 @@ import {
 	BadgeDelta,
 } from "@tremor/react"
 
-import { getReports } from "@/api"
+import { getReports } from "@/api/index"
+import ThemeSelect from "@/component/theme-select"
 
 export default async function Home() {
 	const usersWithReport = await getReports()
@@ -25,13 +26,18 @@ export default async function Home() {
 		<>
 			<main className="p-12">
 				<TabGroup>
-					<TabList variant="solid">
-						{usersWithReport.map((user) => (
-							<Tab key={user.id} className="text-base">
-								{user.name}
-							</Tab>
-						))}
-					</TabList>
+					<div className="flex justify-between">
+						<TabList variant="solid">
+							{usersWithReport.map((user) => (
+								<Tab key={user.id} className="items-center">
+									{user.name}
+								</Tab>
+							))}
+						</TabList>
+						<div className="w-40">
+							<ThemeSelect />
+						</div>
+					</div>
 					<Divider>Portfolio</Divider>
 					<TabPanels>
 						{usersWithReport.map((user) => (

@@ -39,7 +39,6 @@ const getQuotes = async ({ symbol }) => {
     `${ENDPOINT}/marketdata/quotes?apikey=${API_KEY}&symbol=${symbol}`,
   ).json()
 
-  console.log(res)
   return res
 }
 
