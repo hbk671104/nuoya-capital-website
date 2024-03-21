@@ -18,6 +18,7 @@ import {
 
 import { getReports } from "@/api/index"
 import ThemeSelect from "@/component/theme-select"
+// import SymbolSearch from "@/component/symbol-search"
 
 export default async function Home() {
 	const usersWithReport = await getReports()
@@ -26,15 +27,20 @@ export default async function Home() {
 		<>
 			<main className="p-12">
 				<TabGroup>
-					<div className="flex justify-between">
-						<TabList variant="solid">
-							{usersWithReport.map((user) => (
-								<Tab key={user.id} className="items-center">
-									{user.name}
-								</Tab>
-							))}
-						</TabList>
-						<div className="w-40">
+					<div className="flex space-x-6">
+						<div className="flex flex-1 space-x-6">
+							<TabList variant="solid">
+								{usersWithReport.map((user) => (
+									<Tab key={user.id} className="items-center justify-center">
+										{user.name}
+									</Tab>
+								))}
+							</TabList>
+							{/* <div>
+								<SymbolSearch />
+							</div> */}
+						</div>
+						<div>
 							<ThemeSelect />
 						</div>
 					</div>
