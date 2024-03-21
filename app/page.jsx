@@ -91,7 +91,7 @@ export default async function Home() {
 															<Badge>{row?.symbol}</Badge>
 														</TableCell>
 														<TableCell className="text-right">
-															<Badge color="rose">{row?.short}</Badge>
+															<Badge color="red">{row?.short}</Badge>
 														</TableCell>
 														<TableCell className="text-right">
 															<Badge color="emerald">{row?.long}</Badge>
