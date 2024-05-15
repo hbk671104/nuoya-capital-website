@@ -17,15 +17,25 @@ import {
 } from "@tremor/react"
 
 import { getReports } from "@/api/index"
+import { checkLogin, finishLogin } from "@/api/auth"
+
 import ThemeSelect from "@/component/theme-select"
 // import SymbolSearch from "@/component/symbol-search"
 
-export default async function Home() {
-	const usersWithReport = await getReports()
+export default async function Home({ searchParams }) {
+	const code = searchParams?.code
+	if (code) {
+		await finishLogin({ code })
+	}
+
+	// check if user is authenticated
+	await checkLogin()
+
+	// const usersWithReport = await getReports()
 
 	return (
 		<>
-			<main className="p-12">
+			{/* <main className="p-12">
 				<TabGroup>
 					<div className="flex space-x-6">
 						<div className="flex flex-1 space-x-6">
@@ -36,9 +46,9 @@ export default async function Home() {
 									</Tab>
 								))}
 							</TabList>
-							{/* <div>
+							<div>
 								<SymbolSearch />
-							</div> */}
+							</div>
 						</div>
 						<div>
 							<ThemeSelect />
@@ -155,7 +165,7 @@ export default async function Home() {
 						))}
 					</TabPanels>
 				</TabGroup>
-			</main>
+			</main> */}
 			<footer className="text-sm text-center text-gray-500 pb-12">
 				Copyright @ {new Date().getFullYear()} Nuoya Capital LLC. All rights
 				reserved.
