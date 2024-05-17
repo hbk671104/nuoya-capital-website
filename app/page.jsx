@@ -16,21 +16,13 @@ import {
 	BadgeDelta,
 } from "@tremor/react"
 
-import { getReports } from "@/api/index"
-import { checkLogin, finishLogin } from "@/api/auth"
+// import { getReports } from "@/api/index"
+// import { checkLogin, finishLogin } from "@/api/auth"
 
 import ThemeSelect from "@/component/theme-select"
 // import SymbolSearch from "@/component/symbol-search"
 
-export default async function Home({ searchParams }) {
-	const code = searchParams?.code
-	if (code) {
-		await finishLogin({ code })
-	}
-
-	// check if user is authenticated
-	await checkLogin()
-
+export default async function Home() {
 	// const usersWithReport = await getReports()
 
 	return (
