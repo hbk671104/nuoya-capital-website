@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     {
       id: "schwab",
@@ -23,6 +23,8 @@ const handler = NextAuth({
       },
     }
   ],
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }

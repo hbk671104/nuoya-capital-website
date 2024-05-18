@@ -1,3 +1,6 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/api/auth/[...nextauth]/route"
+
 import {
 	Tab,
 	TabGroup,
@@ -24,6 +27,8 @@ import ThemeSelect from "@/component/theme-select"
 
 export default async function Home() {
 	// const usersWithReport = await getReports()
+	const session = await getServerSession(authOptions)
+	console.log(session, "session")
 
 	return (
 		<>
