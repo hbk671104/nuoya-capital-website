@@ -12,8 +12,15 @@ export const authOptions = {
       authorization: "https://api.schwabapi.com/v1/oauth/authorize",
       token: "https://api.schwabapi.com/v1/oauth/token",
       userinfo: "https://api.schwabapi.com/trader/v1/userPreferences",
+      idToken: true,
+      issuer: "urn://api.schwabapi.com",
+      client: {
+        authorization_signed_response_alg: 'HS256',
+        id_token_signed_response_alg: 'HS256'
+      },
       profile(profile) {
         // TODO: Implement user profile
+        console.log(profile)
         return {
           id: null,
           name: null,
