@@ -3,11 +3,6 @@ import { authOptions } from "@/api/auth/[...nextauth]/route"
 import { getReport } from "@/api/account"
 
 import {
-	Tab,
-	TabGroup,
-	TabList,
-	TabPanel,
-	TabPanels,
 	Table,
 	TableBody,
 	TableCell,
@@ -20,9 +15,6 @@ import {
 	BadgeDelta,
 } from "@tremor/react"
 
-// import { getReports } from "@/api/index"
-// import { checkLogin, finishLogin } from "@/api/auth"
-
 import ThemeSelect from "@/component/theme-select"
 import LogoutButton from "@/component/logout-button"
 
@@ -30,13 +22,29 @@ import LogoutButton from "@/component/logout-button"
 
 export default async function Home() {
 	const session = await getServerSession(authOptions)
+	if (!session) {
+		return (
+			<div className="p-12 space-y-6">
+				<div>Unauthorized. Please log in.</div>
+				<LogoutButton />
+			</div>
+		)
+	}
+
 	const report = await getReport({ session })
-
-	// console.log(report)
-
 	return (
-		<>
-			<main className="p-12">
+		<div className="p-12 space-y-6">
+			<header className="flex justify-between items-center">
+				<div className="flex items-center space-x-3">
+					<div className="font-semibold">{session.profile?.accountNumber}</div>
+					<Badge>{session.profile?.type}</Badge>
+				</div>
+				<div>
+					<ThemeSelect />
+				</div>
+			</header>
+			<Divider />
+			<main>
 				<Card decoration="top" decorationColor="indigo">
 					<Table>
 						<TableHead>
@@ -129,11 +137,11 @@ export default async function Home() {
 					</Table>
 				</Card>
 			</main>
-			<footer className="text-sm text-center text-gray-500 pb-12">
+			<LogoutButton />
+			<footer className="text-sm text-center text-gray-500">
 				Copyright @ {new Date().getFullYear()} Nuoya Capital LLC. All rights
 				reserved.
 			</footer>
-			<LogoutButton />
-		</>
+		</div>
 	)
 }
