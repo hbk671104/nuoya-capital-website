@@ -61,6 +61,7 @@ export const getReport = async ({ session }) => {
     let long
     let sym
     switch (instrument.assetType) {
+      case "COLLECTIVE_INVESTMENT":
       case "EQUITY": {
         const { symbol } = instrument
         short = shortQuantity / 100
