@@ -23,6 +23,8 @@ import {
 // import { checkLogin, finishLogin } from "@/api/auth"
 
 import ThemeSelect from "@/component/theme-select"
+import LogoutButton from "@/component/logout-button"
+
 // import SymbolSearch from "@/component/symbol-search"
 
 export default async function Home() {
@@ -167,6 +169,7 @@ export default async function Home() {
 				Copyright @ {new Date().getFullYear()} Nuoya Capital LLC. All rights
 				reserved.
 			</footer>
+			<LogoutButton />
 		</>
 	)
 }
