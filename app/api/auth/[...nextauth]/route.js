@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import dayjs from "dayjs"
 import { getRefreshToken, getAccessToken } from "@/api/auth"
+import { getUserInfo } from "@/api/account"
 
 export const authOptions = {
   providers: [
@@ -31,14 +32,16 @@ export const authOptions = {
         }
       },
       userinfo: {
-        url: "https://api.schwabapi.com/trader/v1/userPreference"
+        async request({ tokens }) {
+          const userInfo = await getUserInfo({ accessToken: tokens.access_token })
+          return userInfo
+        },
       },
-      profile({ accounts }) {
-        const mainAccount = accounts.find((account) => !!account.primaryAccount)
+      profile(account) {
         return {
-          id: mainAccount.accountNumber,
-          name: mainAccount.accountNumber,
-          type: mainAccount.type
+          id: account.accountNumber,
+          name: account.accountNumber,
+          ...account
         }
       },
     }
@@ -49,10 +52,13 @@ export const authOptions = {
   },
   callbacks: {
     async jwt(context) {
-      const { token, account } = context
+      const { token, account, profile } = context
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.account = account
+      }
+      if (profile) {
+        token.profile = profile
       }
 
       // Check if the token is expired and refresh it if necessary
@@ -77,6 +83,7 @@ export const authOptions = {
       const { session, token } = context
       // Send properties to the client, like an access_token and user id from a provider.
       session.account = token.account
+      session.profile = token.profile
 
       return session
     }
