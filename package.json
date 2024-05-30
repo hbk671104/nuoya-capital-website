@@ -1,7 +1,7 @@
 {
   "name": "nuoya-capital-website",
   "description": "nuoya.capital",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "author": "Bokang Huang <hbk671104@gmail.com>",
   "private": true,
   "scripts": {
