@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
-import { getRefreshToken } from "@/api/auth"
+import dayjs from "dayjs"
+import { getRefreshToken, getAccessToken } from "@/api/auth"
 
 export const authOptions = {
   providers: [
@@ -43,20 +44,39 @@ export const authOptions = {
     }
   ],
   session: {
-    // Seconds - How long until an idle session expires and is no longer valid.
+    // How long until an idle session expires and is no longer valid.
     maxAge: 5 * 24 * 60 * 60, //  5 days
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt(context) {
+      const { token, account } = context
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
-        token.accessToken = account.access_token
+        token.account = account
       }
+
+      // Check if the token is expired and refresh it if necessary
+      const accessTokenExpires = dayjs.unix(token.account.expires_at)
+      const now = dayjs()
+      if (accessTokenExpires.isBefore(now)) {
+        const res = await getAccessToken({ account })
+        return {
+          ...token,
+          account: {
+            ...token.account,
+            refresh_token: res.refresh_token ?? token.account.refresh_token,
+            access_token: res.access_token,
+            expires_at: dayjs().add(res.expires_in, "second").unix()
+          }
+        }
+      }
+
       return token
     },
-    async session({ session, token }) {
+    async session(context) {
+      const { session, token } = context
       // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken
+      session.account = token.account
 
       return session
     }
