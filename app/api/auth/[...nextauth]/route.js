@@ -65,7 +65,7 @@ export const authOptions = {
       const accessTokenExpires = dayjs.unix(token.account.expires_at)
       const now = dayjs()
       if (accessTokenExpires.isBefore(now)) {
-        const res = await getAccessToken({ account })
+        const res = await getAccessToken({ account: token.account })
         return {
           ...token,
           account: {
