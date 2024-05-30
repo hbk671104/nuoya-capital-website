@@ -21,8 +21,8 @@ export const getUserInfo = async ({ accessToken }) => {
     }).json(),
   ])
 
-  const mainAccount = preference.accounts.find((account) => !!account.primaryAccount)
-  const hashValue = accountNumbers.find((account) => account.accountNumber === mainAccount.accountNumber).hashValue
+  const mainAccount = preference.accounts[0]
+  const hashValue = accountNumbers[0].hashValue
 
   return {
     ...mainAccount,
