@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth/next"
+import { auth } from "@/auth"
 import { authOptions } from "@/api/auth/[...nextauth]/route"
 import { getReport } from "@/api/account"
 
@@ -11,7 +11,7 @@ import LogoutButton from "@/component/logout-button"
 // import SymbolSearch from "@/component/symbol-search"
 
 export default async function Home() {
-	const session = await getServerSession(authOptions)
+	const session = await auth()
 	if (!session) {
 		return (
 			<div className="p-12 space-y-6">
