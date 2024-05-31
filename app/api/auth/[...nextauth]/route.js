@@ -33,15 +33,16 @@ export const authOptions = {
       },
       userinfo: {
         async request({ tokens }) {
-          const userInfo = await getUserInfo({ accessToken: tokens.access_token })
-          return userInfo
+          const users = await getUserInfo({ accessToken: tokens.access_token })
+          return users
         },
       },
-      profile(account) {
+      profile(users) {
+        const mainAccount = users[0]
         return {
-          id: account.accountNumber,
-          name: account.accountNumber,
-          ...account
+          id: mainAccount.accountNumber,
+          name: mainAccount.accountNumber,
+          ...mainAccount
         }
       },
     }

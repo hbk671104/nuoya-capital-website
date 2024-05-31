@@ -21,18 +21,20 @@ export const getUserInfo = async ({ accessToken }) => {
     }).json(),
   ])
 
-  const mainAccount = preference.accounts[0]
-  const hashValue = accountNumbers[0].hashValue
+  const users = preference.accounts.map((account) => {
+    const hashValue = accountNumbers.find((a) => a.accountNumber === account.accountNumber).hashValue
+    return {
+      ...account,
+      hashValue,
+    }
+  })
 
-  return {
-    ...mainAccount,
-    hashValue,
-  }
+  return users
 }
 
-const getPositions = async ({ session }) => {
+const getPositions = async ({ session, profile }) => {
   const accessToken = session.account?.access_token
-  const accountNumber = session.profile?.hashValue
+  const accountNumber = profile.hashValue
 
   const res = await client.get(`accounts/${accountNumber}`, {
     searchParams: {
@@ -49,9 +51,10 @@ const getPositions = async ({ session }) => {
   }
 }
 
-export const getReport = async ({ session }) => {
+export const getReport = async ({ session, profile }) => {
   const { netLiquidation, positions } = await getPositions({
-    session
+    session,
+    profile
   })
 
   // get the raw data first
