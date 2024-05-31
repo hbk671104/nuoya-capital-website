@@ -13,10 +13,7 @@ export const authOptions = {
       clientId: process.env.SCHWAB_KEY,
       clientSecret: process.env.SCHWAB_SECRET,
       authorization: {
-        url: "https://api.schwabapi.com/v1/oauth/authorize",
-        params: {
-          scope: "readonly",
-        },
+        url: "https://api.schwabapi.com/v1/oauth/authorize"
       },
       token: {
         url: "https://api.schwabapi.com/v1/oauth/token",
@@ -62,15 +59,11 @@ export const authOptions = {
         token.profile = profile
       }
 
-      // Check if the token is expired and refresh it if necessary
-      const accessTokenExpires = dayjs.unix(token.account.expires_at)
-      const now = dayjs()
-      if (accessTokenExpires.isBefore(now)) {
-        const res = await getAccessToken({ account: token.account })
-        token.account.refresh_token = res.refresh_token ?? token.account.refresh_token
-        token.account.access_token = res.access_token
-        token.account.expires_at = dayjs().add(res.expires_in, "second").unix()
-      }
+      // refresh the access token no matter what
+      const res = await getAccessToken({ account: token.account })
+      token.account.refresh_token = res.refresh_token ?? token.account.refresh_token
+      token.account.access_token = res.access_token
+      token.account.expires_at = dayjs().add(res.expires_in, "second").unix()
 
       return token
     },
