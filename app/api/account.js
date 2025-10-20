@@ -74,13 +74,19 @@ export const getReport = async ({ session, profile }) => {
       }
       case "OPTION": {
         const { underlyingSymbol, putCall } = instrument
-        short = putCall === "CALL" ? shortQuantity : longQuantity
-        long = putCall === "CALL" ? longQuantity : shortQuantity
+        const isCall = putCall === "CALL"
+        short = isCall ? shortQuantity : longQuantity
+        long = isCall ? longQuantity : shortQuantity
         sym = underlyingSymbol
         break
       }
       default:
         return acc
+    }
+
+    // skip invalid symbol
+    if (!sym) {
+      return acc
     }
 
     acc[sym] = {
@@ -96,6 +102,8 @@ export const getReport = async ({ session, profile }) => {
 
   const report = Object.keys(raw)
     .sort((a, b) => a.localeCompare(b))
+    // filter out positions without quotes
+    .filter((key) => !!quotes[key]?.quote)
     .map((key) => {
       const { quote } = quotes[key]
       const { lastPrice, netPercentChange, netChange } = quote
